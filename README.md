@@ -22,6 +22,10 @@ _, e := sensuAPI.getClients(&data)
 fmt.Printf(First Client: %+v\n", clients[0])
 ```
 
+## Documentation ##
+
+https://gowalker.org/github.com/jefflaplante/sensulib
+
 ## License ##
 
 GPLv3
