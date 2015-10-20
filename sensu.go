@@ -20,6 +20,8 @@ import (
 type Config struct {
 	Address    string
 	Scheme     string
+	Username   string
+	Password   string
 	HTTPClient *http.Client
 }
 
@@ -70,6 +72,11 @@ func (c *API) buildRequest(method, path string) (*http.Request, error) {
 	}
 
 	req, err := http.NewRequest(method, url.String(), nil)
+
+	if c.config.Username != "" && c.config.Password != "" {
+		req.SetBasicAuth(c.config.Username, c.config.Password)
+	}
+
 	return req, err
 }
 
