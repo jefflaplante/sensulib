@@ -1,6 +1,6 @@
 /*
-Check the status of the API’s transport & Redis connections, and query the transport’s status. (consumer and message counts)
-https://sensuapp.org/docs/0.20/api-health
+List the Sensu version and the transport and Redis connection information. This is the same information that /health uses to determine system health.
+https://sensuapp.org/docs/0.20/api-info
 */
 
 package sensu
