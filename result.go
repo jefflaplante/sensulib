@@ -6,6 +6,7 @@ https://sensuapp.org/docs/0.20/api-results
 package sensu
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 )
@@ -17,6 +18,15 @@ const ResultsURI string = "/results"
 type Result struct {
 	ClientName string `json:"client"`
 	Check      Check  `json:"check"`
+}
+
+// CheckResult struct contains the "bare minimum" needed to POST to sensu-api's /results route.
+type CheckResult struct {
+	Name    string `json:"name"`
+	Source  string `json:"source"`
+	Output  string `json:"output"`
+	Status  int    `json:"status"`
+	Handler string `json:"handler"`
 }
 
 // GetResults gets all results
@@ -39,4 +49,15 @@ func (c *API) GetResultByClientCheck(out interface{}, clientName string, checkNa
 	uri := strings.Join(s, "/")
 	resp, err := c.get(uri, out)
 	return resp, err
+}
+
+// PostCheckResult  POST's check results to sensu-api's /results route.
+//  see https://sensuapp.org/docs/latest/api-results#results-post
+func (c *API) PostCheckResult(result CheckResult) error {
+	res, error := c.post(ResultsURI, result)
+	if res.StatusCode != 202 {
+		return fmt.Errorf("Could not post result to Sensu-API. Expected 202 but received %d, %s", resp.StatusCode, resp.Status)
+	}
+
+	return nil
 }
