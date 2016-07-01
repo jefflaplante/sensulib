@@ -54,10 +54,10 @@ func (c *API) GetResultByClientCheck(out interface{}, clientName string, checkNa
 // PostCheckResult  POST's check results to sensu-api's /results route.
 //  see https://sensuapp.org/docs/latest/api-results#results-post
 func (c *API) PostCheckResult(result CheckResult) error {
-	res, error := c.post(ResultsURI, result)
+	res, err := c.post(ResultsURI, result)
 	if res.StatusCode != 202 {
-		return fmt.Errorf("Could not post result to Sensu-API. Expected 202 but received %d, %s", resp.StatusCode, resp.Status)
+		return fmt.Errorf("Could not post result to Sensu-API. Expected 202 but received %d, %s", res.StatusCode, res.Status)
 	}
 
-	return nil
+	return err
 }
